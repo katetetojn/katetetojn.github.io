@@ -12,13 +12,13 @@ layout: post
 }
 </style>
 
-#### What are the odds of the players surviving Squid Game's glass bridge challenge, if they actually followed the rules?
+**What are the odds of the players surviving Squid Game's glass bridge challenge, if they actually followed the rules?**
 
 By this I mean players go in the exact order as they are assigned, so no jumping ahead, refusing to go, or pushing others off. To answer this question, I created a statistical simulation of the glass bridge challenge in Python ([source code here](https://github.com/katetetojn/glass-bridge-monte-carlo)).
 
 <div id="group-survival-line-chart"></div>
 
-#### Here are the rules I used in the simulation.
+**Here are the rules I used in the simulation.**
 
 1. 16 players are assigned 1 to 16, and they cross the bridge in that order;
 2. The bridge has 18 steps, each with 2 glass panels. At each step, the player at the front of the line ("current player") has 50% chance to choose the right panel, otherwise they are eliminated and player behind them become the current player;
@@ -28,7 +28,7 @@ By this I mean players go in the exact order as they are assigned, so no jumping
    - all players have been eliminated.
 5. Time limit is disregarded for simplicity.
 
-##### Here's what I found after running 1 million simulations.
+**Here's what I found after running 1 million simulations.**
 
 On average, 7 players survived the challenge. This is much more than the 3 survivors in the show! In fact, the probability that 3 or fewer players survive is only about 1.6%. On the other hand, the probability that at least 1 player (i.e., the last player) survives is over 99.94%, so [Seong Gi-hun](https://en.wikipedia.org/wiki/List_of_Squid_Game_characters#Seong_Gi-hun), who chose number 16, was quite right that he didn't have much to worry about.
 
@@ -36,7 +36,7 @@ On average, 7 players survived the challenge. This is much more than the 3 survi
 
 But of course, the survival probabilities of the first few players are so poor that they have no incentive to cooperate. What maximizes collective welfare does not necessarily maximize individual welfare. If they had an accurate assessment of their survival probabilities, they would have even less reason to follow the rules than in the show.
 
-#### Try it yourself!
+**Try it yourself!**
 
 Change `k` with the slider below to see the probability that at least `k` players survive:
 
@@ -59,7 +59,7 @@ Similarly, change `i` to see the survival probability for any individual player 
 
 Does anything surprise you?
 
-#### Appendix
+**Appendix**
 
 _Table 1: Group Survival Probabilities_
 
@@ -206,7 +206,7 @@ _Table 2: Individual Player Survival Probabilities_
       .attr("x", width / 2)
       .attr("y", height + margin.bottom - 5)
       .attr("text-anchor", "middle")
-      .text("# of survivors (k)");
+      .text("k");
 
     svgGroup
       .append("text")
@@ -214,7 +214,7 @@ _Table 2: Individual Player Survival Probabilities_
       .attr("y", -margin.left + 15)
       .attr("text-anchor", "middle")
       .attr("transform", "rotate(-90)")
-      .text("probability");
+      .text("P(# of survivors ≥ k)");
 
     // P(player i survives) bar plot
     const playerData = probsI.map((p, index) => ({ i: index + 1, prob: p }));
@@ -255,7 +255,7 @@ _Table 2: Individual Player Survival Probabilities_
       .attr("x", width / 2)
       .attr("y", height + margin.bottom - 5)
       .attr("text-anchor", "middle")
-      .text("player (i)");
+      .text("i");
 
     svgPlayer
       .append("text")
@@ -263,6 +263,6 @@ _Table 2: Individual Player Survival Probabilities_
       .attr("y", -margin.left + 15)
       .attr("text-anchor", "middle")
       .attr("transform", "rotate(-90)")
-      .text("probability");
+      .text("P(player i survives)");
   });  
 </script>
