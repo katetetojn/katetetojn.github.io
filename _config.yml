@@ -1,6 +1,9 @@
 title: katetetojn's blog
 author: katetetojn
 remote_theme: jekyll/minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
 show_excerpts: true
 minima:
   skin: auto
