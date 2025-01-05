@@ -2,6 +2,8 @@
 layout: post
 ---
 
+**What are the odds of the players surviving Squid Game's glass bridge challenge, if they actually followed the rules?**
+
 <style type="text/css">
 .lined-box {
   border: 1px solid #ccc;
@@ -11,8 +13,6 @@ layout: post
   background-color: #f9f9f9;
 }
 </style>
-
-**What are the odds of the players surviving Squid Game's glass bridge challenge, if they actually followed the rules?**
 
 By this I mean players go in the exact order as they are assigned, so no jumping ahead, refusing to go, or pushing others off. To answer this question, I created a statistical simulation of the glass bridge challenge in Python ([source code here](https://github.com/katetetojn/glass-bridge-monte-carlo)).
 
