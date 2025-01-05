@@ -16,8 +16,6 @@ layout: post
 
 By this I mean players go in the exact order as they are assigned, so no jumping ahead, refusing to go, or pushing others off. To answer this question, I created a statistical simulation of the glass bridge challenge in Python ([source code here](https://github.com/katetetojn/glass-bridge-monte-carlo)).
 
-<div id="group-survival-bar-chart"></div>
-
 #### Here are the rules I used in the simulation.
 
 1. 16 players are assigned 1 to 16, and they cross the bridge in that order;
@@ -31,8 +29,6 @@ By this I mean players go in the exact order as they are assigned, so no jumping
 ##### Here's what I found after running 1 million simulations.
 
 On average, 7 players survived the challenge. This is much more than the 3 survivors in the show! In fact, the probability that 3 or fewer players survive is only about 1.6%. On the other hand, the probability that at least 1 player (i.e., the last player) survives is over 99.94%, so [Seong Gi-hun](https://en.wikipedia.org/wiki/List_of_Squid_Game_characters#Seong_Gi-hun), who chose number 16, was quite right that he didn't have much to worry about.
-
-<div id="player-survival-line-chart"></div>
 
 But of course, the survival probabilities of the first few players are so poor that they have no incentive to cooperate. What maximizes collective welfare does not necessarily maximize individual welfare. If they had an accurate assessment of their survival probabilities, they would have even less reason to follow the rules than in the show.
 
@@ -91,7 +87,8 @@ _Table 2: Individual Player Survival Probabilities_
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
 
-<script src="https://d3js.org/d3.v7.min.js"></script>
+<div id="group-survival-bar-chart"></div>
+<div id="player-survival-line-chart"></div>
 
 <script>
 	/* probs data */
