@@ -1,4 +1,8 @@
 title: katetetojn's blog
 author: katetetojn
-theme: minima
+remote_theme: jekyll/minima
+plugins:
+  - jekyll-seo-tag
 show_excerpts: true
+minima:
+  skin: classic
