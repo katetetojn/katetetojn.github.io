@@ -1,0 +1,8 @@
+title: katetetojn's blog
+author: katetetojn
+remote_theme: jekyll/minima
+show_excerpts: true
+minima:
+  skin: auto
+  social_links:
+    - { platform: github, user_url: "https://github.com/katetetojn" }
