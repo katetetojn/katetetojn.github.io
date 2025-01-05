@@ -4,14 +4,14 @@ layout: post
 
 **What are the odds of the players surviving Squid Game's glass bridge challenge, if they actually followed the rules?**
 
-By this I mean players go in the exact order as they are assigned, so no jumping ahead, refusing to go, or pushing others off. To answer this question, I created a statistical simulation of the glass bridge challenge in Python, under the following rules:
+By this I mean players go in the exact order as they are assigned, so no jumping ahead, refusing to go, or pushing others off. To answer this question, I created a statistical simulation of the glass bridge challenge in Python ([source code here](https://github.com/katetetojn/glass-bridge-monte-carlo)), under the following rules:
 
 1. 16 players are assigned 1 to 16, and they cross the bridge in that order;
 2. The bridge has 18 steps, each with 2 glass panels. At each step, the player at the front of the line ("current player") has 50% chance to choose the right panel, otherwise they are eliminated and player behind them become the current player;
 3. Once a player has attempted a step, all players will safely pass that step;
 4. The game is over when
-    - at least one player has passed, or
-    - all players have been eliminated.
+   - at least one player has passed, or
+   - all players have been eliminated.
 5. Time limit is disregarded for simplicity.
 
 Here's what I found after running 1 million simulations:
@@ -34,9 +34,13 @@ Similarly, change `i` to see the survival probability for any individual player 
   <p>The probability that player <span id="prob-i-value">7</span> survives is <span id="prob-i-display">11.93%</span>. Conversely, the probability that they do not survive is <span id="prob-i-complement-display">88.07%</span>.</p>
 </div>
 
-You can also see all the probabilities in the tables below. Does anything surprise you? 
+<div id="group-survival-bar-chart"></div>
+<div id="player-survival-line-chart"></div>
+<script src="https://d3js.org/d3.v7.min.js"></script>
 
-*Table 1: Group Survival Probabilities*
+Does anything surprise you?
+
+_Table 1: Group Survival Probabilities_
 
 <table id="prob-ge-k-table">
   <thead>
@@ -50,7 +54,7 @@ You can also see all the probabilities in the tables below. Does anything surpri
   </tbody>
 </table>
 
-*Table 2: Individual Player Survival Probabilities*
+_Table 2: Individual Player Survival Probabilities_
 
 <table id="prob-i-table">
   <thead>
@@ -64,7 +68,10 @@ You can also see all the probabilities in the tables below. Does anything surpri
   </tbody>
 </table>
 
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
 <script>
+	/* probs data */
   // P(# of survivors ≥ k)
   const probGeK = [
     0.999350, 0.996189, 0.984360, 0.951677, 0.881019, 
@@ -80,6 +87,7 @@ You can also see all the probabilities in the tables below. Does anything surpri
   ];
 
   document.addEventListener('DOMContentLoaded', function() {
+		/* sliders */
     const probGeKSlider = document.getElementById('prob-ge-k-slider');
     const probGeKValue = document.getElementById('prob-ge-k-value');
     const probGeKValue2 = document.getElementById('prob-ge-k-value-2');
@@ -133,5 +141,104 @@ You can also see all the probabilities in the tables below. Does anything surpri
       `;
       probITableBody.appendChild(row);
     });
-  });
+
+    /* d3 visualizations */
+    const groupData = probGeK.map((p, index) => ({ k: index + 1, prob: p }));
+    const margin = { top: 20, right: 30, bottom: 40, left: 50 };
+    const width = 600 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
+
+    const svgGroup = d3
+      .select("#group-survival-bar-chart")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const xGroup = d3
+      .scaleBand()
+      .domain(groupData.map(d => d.k))
+      .range([0, width])
+      .padding(0.1);
+
+    const yGroup = d3.scaleLinear().domain([0, 1]).nice().range([height, 0]);
+
+    svgGroup
+      .selectAll(".bar")
+      .data(groupData)
+      .enter()
+      .append("rect")
+      .attr("class", "bar")
+      .attr("x", d => xGroup(d.k))
+      .attr("y", d => yGroup(d.prob))
+      .attr("width", xGroup.bandwidth())
+      .attr("height", d => height - yGroup(d.prob))
+      .attr("fill", "steelblue");
+
+    svgGroup.append("g").attr("class", "x-axis").attr("transform", `translate(0,${height})`).call(d3.axisBottom(xGroup));
+    svgGroup.append("g").attr("class", "y-axis").call(d3.axisLeft(yGroup).tickFormat(d3.format(".0%")));
+
+    svgGroup
+      .append("text")
+      .attr("x", width / 2)
+      .attr("y", height + margin.bottom - 5)
+      .attr("text-anchor", "middle")
+      .text("Number of Survivors (k)");
+
+    svgGroup
+      .append("text")
+      .attr("x", -height / 2)
+      .attr("y", -margin.left + 15)
+      .attr("text-anchor", "middle")
+      .attr("transform", "rotate(-90)")
+      .text("Probability");
+
+    const playerData = probsI.map((p, index) => ({ i: index + 1, prob: p }));
+    const svgPlayer = d3
+      .select("#player-survival-line-chart")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const xPlayer = d3
+      .scaleLinear()
+      .domain([1, 16])
+      .range([0, width]);
+
+    const yPlayer = d3.scaleLinear().domain([0, 1]).nice().range([height, 0]);
+
+    const linePlayer = d3
+      .line()
+      .x(d => xPlayer(d.i))
+      .y(d => yPlayer(d.prob));
+
+    svgPlayer
+      .append("path")
+      .datum(playerData)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2)
+      .attr("d", linePlayer);
+
+    svgPlayer.append("g").attr("class", "x-axis").attr("transform", `translate(0,${height})`).call(d3.axisBottom(xPlayer).ticks(16));
+    svgPlayer.append("g").attr("class", "y-axis").call(d3.axisLeft(yPlayer).tickFormat(d3.format(".0%")));
+
+    svgPlayer
+      .append("text")
+      .attr("x", width / 2)
+      .attr("y", height + margin.bottom - 5)
+      .attr("text-anchor", "middle")
+      .text("Player Number (i)");
+
+    svgPlayer
+      .append("text")
+      .attr("x", -height / 2)
+      .attr("y", -margin.left + 15)
+      .attr("text-anchor", "middle")
+      .attr("transform", "rotate(-90)")
+      .text("Probability");
+  });  
 </script>
