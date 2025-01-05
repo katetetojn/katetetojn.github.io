@@ -16,9 +16,9 @@ By this I mean players go in the exact order as they are assigned, so no jumping
 
 Here's what I found after running 1 million simulations:
 
-**On average, 7 players survived the challenge.** This is much more than the 3 survivors in the show! In fact, the probability that 3 or fewer players survive is only about 1.6%. On the other hand, the probability that at least 1 player (i.e., the last player) survives is over 99.9%, so [Seong Gi-hun](https://en.wikipedia.org/wiki/List_of_Squid_Game_characters#Seong_Gi-hun), who chose number 16, was quite right that he didn't have much to worry about.
+On average, 7 players survived the challenge. This is much more than the 3 survivors in the show! In fact, the probability that 3 or fewer players survive is only about 1.6%. On the other hand, the probability that at least 1 player (i.e., the last player) survives is over 99.9%, so [Seong Gi-hun](https://en.wikipedia.org/wiki/List_of_Squid_Game_characters#Seong_Gi-hun), who chose number 16, was quite right that he didn't have much to worry about.
 
-Move the slider below to see the probability that  at least `k` survivors:
+Try to change `k` with the slider below to see the probability that there are at least `k` survivors.
 
 <div id="prob-ge-k-slider-container">
   <label for="prob-ge-k-slider"># of survivors (k): </label>
@@ -26,13 +26,15 @@ Move the slider below to see the probability that  at least `k` survivors:
   <p>The probability that at least <span id="prob-ge-k-value">7</span> players survive is <span id="prob-ge-k-display">59.30%</span>. Conversely, the probability that fewer than <span id="prob-ge-k-value-2">7</span> players survive is <span id="prob-ge-k-complement-display">40.70%</span>.</p>
 </div>
 
-Move the slider below to see the survival probGeK for an individual player with number `i`:
+Similarly, change `i` to see the survival probability for any individual player with number `i`:
 
 <div id="prob-i-slider-container">
   <label for="prob-i-slider">player (i): </label>
   <input type="range" id="prob-i-slider" min="1" max="16" value="7" step="1" />
   <p>The probability that player <span id="prob-i-value">7</span> survives is <span id="prob-i-display">11.93%</span>. Conversely, the probability that they do not survive is <span id="prob-i-complement-display">88.07%</span>.</p>
 </div>
+
+You can also see all the probabilities in the tables below. Does anything surprise you? 
 
 *Table 1: Group Survival Probabilities*
 
@@ -53,9 +55,9 @@ Move the slider below to see the survival probGeK for an individual player with 
 <table id="prob-i-table">
   <thead>
     <tr>
-      <th>player i</th>
-      <th>P(survives)</th>
-      <th>P(doesn't survive)</th>
+      <th>i</th>
+      <th>P(player i survives)</th>
+      <th>P(player i doesn't survive)</th>
     </tr>
   </thead>
   <tbody>
