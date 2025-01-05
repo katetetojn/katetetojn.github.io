@@ -1,8 +1,9 @@
 ---
 layout: post
+excerpt: "What are the odds of players surviving Squid Game's glass bridge challenge, if they actually followed the rules?"
 ---
 
-**What are the odds of the players surviving Squid Game's glass bridge challenge, if they actually followed the rules?**
+**What are the odds of players surviving Squid Game's glass bridge challenge, if they actually followed the rules?**
 
 <style type="text/css">
 .lined-box {
