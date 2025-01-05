@@ -31,7 +31,7 @@ By this I mean players go in the exact order as they are assigned, so no jumping
 
 **Here's what I found after running 1 million simulations.**
 
-On average, 7 players survived the challenge. This is much more than the 3 survivors in the show! In fact, the probability that 3 or fewer players survive is only about 1.6%. On the other hand, the probability that at least 1 player (i.e., the last player) survives is over 99.94%, so [Seong Gi-hun](https://en.wikipedia.org/wiki/List_of_Squid_Game_characters#Seong_Gi-hun), who chose number 16, was quite right that he didn't have much to worry about.
+On average, 7 players survived the challenge. This is much more than the 3 survivors in the show! In fact, the probability that 3 or fewer players survive is only about 1.6%. On the other hand, the probability that at least 1 player (i.e., the last player) survives is over 99.94%, so player 16 really didn't have much to worry about.
 
 <!-- <div id="player-survival-bar-chart"></div> -->
 ![survival probability bar plot](/assets/2025-01-04-glass-bridge-monte-carlo-2.png)
@@ -40,7 +40,7 @@ But of course, the survival probabilities of the first few players are so poor t
 
 **Try it yourself!**
 
-Change `k` with the slider below to see the probability that at least `k` players survive:
+Change `k` with the slider below to see the probability that at least `k` players survive.
 
 <div class="lined-box" id="prob-ge-k-slider-container">
   <label for="prob-ge-k-slider"># of survivors (k): </label>
@@ -48,7 +48,7 @@ Change `k` with the slider below to see the probability that at least `k` player
   <p>The probability that at least <span id="prob-ge-k-value">7</span> players survive is <span id="prob-ge-k-display">59.30%</span>. Conversely, the probability that fewer than <span id="prob-ge-k-value-2">7</span> players survive is <span id="prob-ge-k-complement-display">40.70%</span>.</p>
 </div>
 
-Similarly, change `i` to see the survival probability for any individual player with number `i`
+Similarly, change `i` to see the survival probability for any individual player with number `i`.
 
 <div class="lined-box" id="prob-i-slider-container">
     <label for="prob-i-slider">player (i): </label>
