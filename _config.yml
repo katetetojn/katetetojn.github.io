@@ -1,10 +1,4 @@
 title: katetetojn's blog
 author: katetetojn
-remote_theme: jekyll/minima
-plugins:
-  - jekyll-seo-tag
+theme: minima
 show_excerpts: true
-minima:
-  skin: classic
-  social_links:
-    - { platform: github, user_url: "https://github.com/katetetojn" }
