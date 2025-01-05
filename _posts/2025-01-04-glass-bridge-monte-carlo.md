@@ -12,13 +12,13 @@ layout: post
 }
 </style>
 
-##### What are the odds of the players surviving Squid Game's glass bridge challenge, if they actually followed the rules?
+#### What are the odds of the players surviving Squid Game's glass bridge challenge, if they actually followed the rules?
 
 By this I mean players go in the exact order as they are assigned, so no jumping ahead, refusing to go, or pushing others off. To answer this question, I created a statistical simulation of the glass bridge challenge in Python ([source code here](https://github.com/katetetojn/glass-bridge-monte-carlo)).
 
 <div id="group-survival-bar-chart"></div>
 
-##### Here are the rules I used in the simulation.
+#### Here are the rules I used in the simulation.
 
 1. 16 players are assigned 1 to 16, and they cross the bridge in that order;
 2. The bridge has 18 steps, each with 2 glass panels. At each step, the player at the front of the line ("current player") has 50% chance to choose the right panel, otherwise they are eliminated and player behind them become the current player;
@@ -36,8 +36,7 @@ On average, 7 players survived the challenge. This is much more than the 3 survi
 
 But of course, the survival probabilities of the first few players are so poor that they have no incentive to cooperate. What maximizes collective welfare does not necessarily maximize individual welfare. If they had an accurate assessment of their survival probabilities, they would have even less reason to follow the rules than in the show.
 
-
-##### Try it yourself!
+#### Try it yourself!
 
 Change `k` with the slider below to see the probability that at least `k` players survive:
 
@@ -59,6 +58,8 @@ Similarly, change `i` to see the survival probability for any individual player 
 </div>
 
 Does anything surprise you?
+
+#### Appendix
 
 _Table 1: Group Survival Probabilities_
 
