@@ -23,7 +23,7 @@ Try to change `k` with the slider below to see the probability that there are at
 <div id="prob-ge-k-slider-container">
   <label for="prob-ge-k-slider"># of survivors (k): </label>
   <input type="range" id="prob-ge-k-slider" min="1" max="16" value="7" step="1" />
-  <p>The probability that at least <span id="prob-ge-k-value"></span> players survive is <span id="prob-ge-k-display"></span>. Conversely, the probability that fewer than <span id="prob-ge-k-value-2"></span> players survive is <span id="prob-ge-k-complement-display"></span>.</p>
+  <p>The probability that at least <span id="prob-ge-k-value">7</span> players survive is <span id="prob-ge-k-display">59.30%</span>. Conversely, the probability that fewer than <span id="prob-ge-k-value-2">7</span> players survive is <span id="prob-ge-k-complement-display">40.70%</span>.</p>
 </div>
 
 Similarly, change `i` to see the survival probability for any individual player with number `i`:
@@ -31,7 +31,7 @@ Similarly, change `i` to see the survival probability for any individual player 
 <div id="prob-i-slider-container">
   <label for="prob-i-slider">player (i): </label>
   <input type="range" id="prob-i-slider" min="1" max="16" value="7" step="1" />
-  <p>The probability that player <span id="prob-i-value"></span> survives is <span id="prob-i-display"></span>. Conversely, the probability that they do not survive is <span id="prob-i-complement-display"></span>.</p>
+  <p>The probability that player <span id="prob-i-value">7</span> survives is <span id="prob-i-display">11.93%</span>. Conversely, the probability that they do not survive is <span id="prob-i-complement-display">88.07%</span>.</p>
 </div>
 
 You can also see all the probabilities in the tables below. Does anything surprise you? 
