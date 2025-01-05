@@ -1,7 +1,10 @@
 ---
 layout: post
 ---
-**What are the odds of the players surviving Squid Game's glass bridge challenge, if they actually followed the rules?** By this I mean players go in the exact order as they are assigned, so no jumping ahead, refusing to go, or pushing others off. I created a statistical simulation of the glass bridge challenge in Python with the following rules:
+
+**What are the odds of the players surviving Squid Game's glass bridge challenge, if they actually followed the rules?**
+
+By this I mean players go in the exact order as they are assigned, so no jumping ahead, refusing to go, or pushing others off. To answer this question, I created a statistical simulation of the glass bridge challenge in Python, under the following rules:
 
 1. 16 players are assigned 1 to 16, and they cross the bridge in that order;
 2. The bridge has 18 steps, each with 2 glass panels. At each step, the player at the front of the line ("current player") has 50% chance to choose the right panel, otherwise they are eliminated and player behind them become the current player;
@@ -11,50 +14,122 @@ layout: post
     - all players have been eliminated.
 5. Time limit is disregarded for simplicity.
 
-Here are key findings from 1 million simulations:
+Here's what I found after running 1 million simulations:
 
-**On average, 7 players survived the challenge.** This is much more than the 3 survivors in the show! In fact, the probability that 3 or fewer players survive is only about 1.6%, if they followed the rules! On the other hand, the probability that at least 1 player (i.e., the last player) survives is over 99.9%, so [Seong Gi-hun](https://en.wikipedia.org/wiki/List_of_Squid_Game_characters#Seong_Gi-hun), who chose number 16, was quite right that he didn't have much to worry about.
+**On average, 7 players survived the challenge.** This is much more than the 3 survivors in the show! In fact, the probability that 3 or fewer players survive is only about 1.6%. On the other hand, the probability that at least 1 player (i.e., the last player) survives is over 99.9%, so [Seong Gi-hun](https://en.wikipedia.org/wiki/List_of_Squid_Game_characters#Seong_Gi-hun), who chose number 16, was quite right that he didn't have much to worry about.
 
-You can move the slider below to see the probabilities yourself.
+Move the slider below to see the probability that  at least `k` survivors:
 
-<div id="slider-container">
-  <input type="range" id="number-slider" min="0" max="100" value="50" />
-  <p>Current Value: <span id="slider-value">50</span></p>
+<div id="prob-ge-k-slider-container">
+  <label for="prob-ge-k-slider"># of survivors (k): </label>
+  <input type="range" id="prob-ge-k-slider" min="1" max="16" value="7" step="1" />
+  <p>The probability that at least <span id="prob-ge-k-value">7</span> players survive is <span id="prob-ge-k-display">59.30%</span>. Conversely, the probability that fewer than <span id="prob-ge-k-value-2">7</span> players survive is <span id="prob-ge-k-complement-display">40.70%</span>.</p>
 </div>
 
-<script>
-  // JavaScript to update the displayed number dynamically
-  document.addEventListener('DOMContentLoaded', function() {
-    const slider = document.getElementById('number-slider');
-    const valueDisplay = document.getElementById('slider-value');
+Move the slider below to see the survival probGeK for an individual player with number `i`:
 
-    slider.addEventListener('input', function() {
-      valueDisplay.textContent = slider.value;
+<div id="prob-i-slider-container">
+  <label for="prob-i-slider">player (i): </label>
+  <input type="range" id="prob-i-slider" min="1" max="16" value="7" step="1" />
+  <p>The probability that player <span id="prob-i-value">7</span> survives is <span id="prob-i-display">11.93%</span>. Conversely, the probability that they do not survive is <span id="prob-i-complement-display">88.07%</span>.</p>
+</div>
+
+*Table 1: Group Survival Probabilities*
+
+<table id="prob-ge-k-table">
+  <thead>
+    <tr>
+      <th>k</th>
+      <th>P(# of survivors ≥ k)</th>
+      <th>P(# of survivors < k)</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+*Table 2: Individual Player Survival Probabilities*
+
+<table id="prob-i-table">
+  <thead>
+    <tr>
+      <th>player i</th>
+      <th>P(survives)</th>
+      <th>P(doesn't survive)</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+  // P(# of survivors ≥ k)
+  const probGeK = [
+    0.999350, 0.996189, 0.984360, 0.951677, 0.881019, 
+    0.759753, 0.592996, 0.407557, 0.241016, 0.119258, 
+    0.048316, 0.015456, 0.003825, 0.000677, 0.000069, 0.000002
+  ];
+
+  // P(player i survives)
+  const probsI = [
+    0.000002, 0.000069, 0.000677, 0.003825, 0.015456, 
+    0.048316, 0.119258, 0.241016, 0.407557, 0.592996, 
+    0.759753, 0.881019, 0.951677, 0.984360, 0.996189, 0.999350
+  ];
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const probGeKSlider = document.getElementById('prob-ge-k-slider');
+    const probGeKValue = document.getElementById('prob-ge-k-value');
+    const probGeKValue2 = document.getElementById('prob-ge-k-value-2');
+    const probGeKDisplay = document.getElementById('prob-ge-k-display');
+    const probGeKComplementDisplay = document.getElementById('prob-ge-k-complement-display');
+    const probGeKTableBody = document.querySelector('#prob-ge-k-table tbody');
+
+    const probISlider = document.getElementById('prob-i-slider');
+    const probIValue = document.getElementById('prob-i-value');
+    const probIDisplay = document.getElementById('prob-i-display');
+    const probIComplementDisplay = document.getElementById('prob-i-complement-display');
+    const probITableBody = document.querySelector('#prob-i-table tbody');
+
+    probGeKSlider.addEventListener('input', function() {
+      const k = probGeKSlider.value;
+      probGeKValue.textContent = k;
+      probGeKValue2.textContent = k;
+      const probK = (probGeK[k - 1] * 100).toFixed(2);
+      const probKComplement = ((1 - probGeK[k - 1]) * 100).toFixed(2);
+      probGeKDisplay.textContent = `${probK}%`;
+      probGeKComplementDisplay.textContent = `${probKComplement}%`;
+    });
+
+    probISlider.addEventListener('input', function() {
+      const i = probISlider.value;
+      probIValue.textContent = i;
+      const probI = (probsI[i - 1] * 100).toFixed(2);
+      const probIComplement = ((1 - probsI[i - 1]) * 100).toFixed(2);
+      probIDisplay.textContent = `${probI}%`;
+      probIComplementDisplay.textContent = `${probIComplement}%`;
+    });
+
+    probGeK.forEach((p, index) => {
+      const survivors = index + 1;
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${survivors}</td>
+        <td>${(p * 100).toFixed(2)}%</td>
+        <td>${((1 - p) * 100).toFixed(2)}%</td>
+      `;
+      probGeKTableBody.appendChild(row);
+    });
+
+    probsI.forEach((p, index) => {
+      const player = index + 1;
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${player}</td>
+        <td>${(p * 100).toFixed(2)}%</td>
+        <td>${((1 - p) * 100).toFixed(2)}%</td>
+      `;
+      probITableBody.appendChild(row);
     });
   });
 </script>
-
-You can also find an exhaustive table of probabilities in the end.
-
-There are other possible collaborative strategies. For example, players may decide to rotate, i.e., player 1 takes the first try, player 2 takes the second, etc. I will consider them in the future.
-
-*Appendix: Table of Probabilities*
-
-| # of Survivors (k) | P(survivors ≥ k) | P(survivors < k) |
-|----------------------|------------------|------------------|
-| 1  | 0.999350 | 0.000650 |
-| 2  | 0.996189 | 0.003811 |
-| 3  | 0.984360 | 0.015640 |
-| 4  | 0.951677 | 0.048323 |
-| 5  | 0.881019 | 0.118981 |
-| 6  | 0.759753 | 0.240247 |
-| 7  | 0.592996 | 0.407004 |
-| 8  | 0.407557 | 0.592443 |
-| 9  | 0.241016 | 0.758984 |
-| 10 | 0.119258 | 0.880742 |
-| 11 | 0.048316 | 0.951684 |
-| 12 | 0.015456 | 0.984544 |
-| 13 | 0.003825 | 0.996175 |
-| 14 | 0.000677 | 0.999323 |
-| 15 | 0.000069 | 0.999931 |
-| 16 | 0.000002 | 0.999998 |
